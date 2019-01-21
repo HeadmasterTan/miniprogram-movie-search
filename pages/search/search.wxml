@@ -1,0 +1,29 @@
+<!--index.wxml-->
+<view class="container" style="{{windowSize}}">
+    <!-- 导航 -->
+    <view class="navigator">
+        <input class="search-input" focus="{{true}}" bindinput="searchMovie" placeholder="电影名 / 明星 / 类型"></input>
+        <view class="cancel" bindtap="navigateBack">
+            取消
+        </view>
+    </view>
+    <!-- 内容 -->
+    <view class="content">
+        <!-- 列表 -->
+        <scroll-view class="list" scroll-y bindscrolltolower="loadMoreMovie">
+            <!-- 单个电影信息 -->
+            <view class="item" wx:for="{{movies}}" wx:key="{{item.id}}">
+                <image class="image" mode="scaleToFill" src="{{item.images.medium}}"></image>
+                <view class="detail">
+                    <view class="name">{{item.title}}</view>
+                    <view class="rating">评分：<text>{{item.rating.average == 0 ? '暂无评分' : item.rating.average}}</text></view>
+                    <view class="casts">主演：{{item.castsStr}}</view>
+                    <view class="genres">类型：{{item.genresStr}}</view>
+                </view>
+            </view>
+            <view class="no-more">
+                {{noMoreDesc}}
+            </view>
+        </scroll-view>
+    </view>
+</view>
