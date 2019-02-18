@@ -55,8 +55,8 @@ Page({
             responseType: 'text',
             success: res => {
                 res.data.subjects.forEach(item => {
-                    item.castsStr = item.casts.length > 0 ? item.casts.map(cast => cast.name).join('，') : '(未公开)';
-                    item.genresStr = item.genres.length > 0 ? item.genres.join('，') : '(未知)';
+                    item.castsStr = item.casts.length > 0 ? item.casts.map(cast => cast.name).join(' / ') : '(未公开)';
+                    item.genresStr = item.genres.length > 0 ? item.genres.join(' / ') : '(未知)';
                 });
 
                 // 将返回的电影列表重新排序，新获取到的排到最后面

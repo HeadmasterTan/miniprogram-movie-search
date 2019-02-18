@@ -14,22 +14,22 @@ Page({
         start: 0, // 开始下标
         count: [20, 20], // 查询条数
 
-        curList: 0, // 选中项 0 热映 1 top250
         curUrl: 'in_theaters', // 当前查询的地址
-        noMoreMovie: false, // 没有更多电影啦
+        curList: 0, // 选中项 0 热映 1 top250
         noMoreDesc: '别急，让我找找...', // 没有更多电影的底部描述
+        noMoreMovie: false, // 没有更多电影啦
 
         // 查询地址
         urlPrefix: 'https://douban.uieee.com/v2/movie/',
-        hotMovieUrl: 'in_theaters', // 热映电影
         top250Url: 'top250', // 最热前250
+        hotMovieUrl: 'in_theaters', // 热映电影
 
         deviceInfo: {}, // 设备信息
         windowSize: '', // 设备窗口大小
 
-        menuList: ['正在热映', '豆瓣排行'], // 菜单
-        cityList: [], // 城市列表
         movies: [], // 电影列表，每一个菜单对应一个列表
+        cityList: [], // 城市列表
+        menuList: ['正在热映', '豆瓣排行'], // 菜单
         // api返回的单个数据展示，这个东西是拿来看的，不是拿来用的
         // movie: {
         //     alt: '', // 地址
@@ -171,8 +171,8 @@ Page({
                         noMoreMovie: false
                     });
                     res.data.subjects.forEach(item => {
-                        item.castsStr = item.casts.length > 0 ? item.casts.map(cast => cast.name).join('，') : '(未公开)';
-                        item.genresStr = item.genres.length > 0 ? item.genres.join('，') : '(未知)';
+                        item.castsStr = item.casts.length > 0 ? item.casts.map(cast => cast.name).join(' / ') : '(未公开)';
+                        item.genresStr = item.genres.length > 0 ? item.genres.join(' / ') : '(未知)';
                     });
 
                     // 将返回的电影列表重新排序，新获取到的排到最后面
@@ -194,7 +194,6 @@ Page({
                     // 拼接电影列表
                     let movieList = [].concat(this.data.movies);
                     movieList[curList] = movieList[curList].concat(supMovies);
-                    console.log(movieList);
                     this.setData({
                         movies: movieList
                     });
@@ -259,6 +258,15 @@ Page({
             content: '功能施工中...',
             showCancel: false,
             confirmText: '我知道了'
+        });
+    },
+    /**
+     * 展示电影信息
+     */
+    showMovieInfo(e) {
+        app.globalData.movieId = e.currentTarget.dataset.movieid;
+        wx.navigateTo({
+            url: '../detail/detail'
         });
     }
 })

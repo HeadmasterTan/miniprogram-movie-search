@@ -14,7 +14,7 @@
         <!-- 列表 -->
         <scroll-view class="list" scroll-y bindscrolltolower="loadMoreMovie">
             <!-- 单个电影信息 -->
-            <view class="item" wx:for="{{movies[curList]}}" wx:key="{{item.id}}">
+            <view class="item" wx:for="{{movies[curList]}}" wx:key="{{item.id}}" data-movieId="{{item.id}}" bindtap="showMovieInfo">
                 <image class="image" mode="scaleToFill" src="{{item.images.medium}}"></image>
                 <view class="detail">
                     <view class="name">{{item.title}}</view>

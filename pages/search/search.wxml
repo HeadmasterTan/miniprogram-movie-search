@@ -2,7 +2,7 @@
 <view class="container" style="{{windowSize}}">
     <!-- 导航 -->
     <view class="navigator">
-        <input class="search-input" focus="{{true}}" bindinput="searchMovie" placeholder="电影名 / 明星 / 类型"></input>
+        <input class="search-input" focus="{{true}}" bindinput="searchMovie" placeholder="电影名 / 明星"></input>
         <view class="cancel" bindtap="navigateBack">
             取消
         </view>

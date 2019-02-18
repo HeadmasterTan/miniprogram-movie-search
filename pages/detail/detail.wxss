@@ -1,1 +1,46 @@
-/* pages/detail/detail.wxss */
+page {
+    width: 100%;
+    height: 100%;
+}
+
+.detail {
+    width: 100%;
+    height: 100%;
+}
+
+/* 信息 */
+.info-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30rpx;
+    width: 100%;
+    height: 50%;
+    box-sizing: border-box;
+}
+
+.back-image {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    filter: blur(10px);
+    z-index: -1;
+}
+
+.bill-image {
+    width: 300rpx;
+    height: 80%;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+}
+
+/* 简介 */
+
+/* 导演 / 演员 */
+
+/* 评论 */

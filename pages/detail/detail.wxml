@@ -1,2 +1,21 @@
-<!--pages/detail/detail.wxml-->
-<text>pages/detail/detail.wxml</text>
+
+<view class="detail">
+    <view class="info-box">
+        <view class="back-image" style="{{backImage}}"></view>
+        <view class="bill-image" style="{{backImage}}"></view>
+        <view class="info">
+            <view class="title">
+                <view class="main"></view>
+                <view class="sub"></view>
+            </view>
+            <view class="director"></view>
+            <view class="casts"></view>
+            <view class="rating"></view>
+            <view class="year"></view>
+            <view class="tags"></view>
+        </view>
+    </view>
+    <view class="summary"></view>
+    <view class="director-casts"></view>
+    <view class="reviews"></view>
+</view>
