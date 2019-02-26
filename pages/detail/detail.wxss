@@ -8,6 +8,10 @@ page {
     height: 100%;
 }
 
+.hide {
+    display: none;
+}
+
 /* 信息 */
 .info-box {
     position: relative;
@@ -16,19 +20,27 @@ page {
     justify-content: center;
     padding: 30rpx;
     width: 100%;
-    height: 50%;
+    height: 48%;
     box-sizing: border-box;
 }
 
-.back-image {
+.back {
     position: absolute;
     top: 0px;
     left: 0px;
     right: 0px;
     bottom: 0px;
+}
+
+.back-image {
     background-repeat: no-repeat;
     background-size: 100% auto;
     filter: blur(10px);
+    z-index: -10;
+}
+
+.back-mask {
+    background-color: rgba(0, 0, 0, .3);
     z-index: -1;
 }
 
@@ -39,8 +51,228 @@ page {
     background-size: 100% 100%;
 }
 
-/* 简介 */
+.info {
+    flex: 1;
+    margin-left: 10px;
+    color: #fff;
+    font-size: 30rpx;
+}
 
-/* 导演 / 演员 */
+.info .item {
+    width: 390rpx;
+    margin-bottom: 5px;
+}
+
+.info .title .main {
+    font-size: 36rpx;
+}
+
+.info .title .sub {
+    font-size: 26rpx;
+}
+
+.info .rating .rate {
+    font-size: 38rpx;
+    color: #ff9900;
+}
+
+.info .director {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.info .casts {
+    display: -webkit-box;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	-webkit-box-orient: vertical;
+	-webkit-line-clamp: 2;
+}
+
+/* 分隔 */
+.divider {
+    width: 100%;
+    height: 15px;
+    background-color: white;
+    position: relative;
+    z-index: 10;
+}
+
+/* Common */
+.section {
+    width: 100%;
+    padding: 0 10px;
+    box-sizing: border-box;
+    background-color: white;
+    margin-bottom: 5px;
+}
+
+.section .title {
+    border-left: 4px solid green;
+    padding-left: 10px;
+    font-size: 34rpx;
+}
+
+.section .content {
+    padding: 10px 0;
+    font-size: 30rpx;
+    text-align: justify;
+    line-height: 40rpx;
+    color: #515a6e;
+}
+
+/* 导演 / 主演 / 编剧 */
+.director-casts .content, .writers .content {
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+
+.director-casts .inline-item, .writers .inline-item {
+    display: inline-block;
+    margin-right: 10px;
+}
+.director-casts .inline-item:last-of-type, .writers .inline-item:last-of-type {
+    margin-right: 0;
+}
+
+.director-casts .item, .writers .item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 165rpx;
+    height: 250rpx;
+}
+
+.director-casts .logo, .writers .logo {
+    width: 100%;
+    height: 80%;
+    margin-bottom: 5px;
+}
+
+.director-casts .name, .writers .name {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+    font-size: 24rpx;
+}
+
+/* 剧照 */
+.photos .content {
+    white-space: nowrap;
+    overflow-x: scroll;
+}
+
+.photos .photo {
+    display: inline-block;
+    width: 200rpx;
+    height: 200rpx;
+    margin-right: 10px;
+}
+.photos .photo:last-of-type {
+    margin-right: 0;
+}
 
 /* 评论 */
+.reviews .item {
+    margin: 10px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e8eaec;
+}
+
+.reviews .user-info {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.reviews .user-info .logo {
+    width: 50rpx;
+    height: 50rpx;
+    margin-right: 10px;
+}
+
+.reviews .user-info .name {
+    margin-right: 5px;
+}
+
+.reviews .user-info .rating .value {
+    color: #ff9900;
+}
+
+.reviews .user-info .rating .default {
+    color: #c5c8ce;
+}
+
+.reviews .user-info .review-rate {
+    position: absolute;
+    right: 0px;
+}
+
+.reviews .user-info .review-rate .up {
+    color: #19be6b;
+    margin-right: 10px;
+}
+
+.reviews .user-info .review-rate .down {
+    color: #ed4014;
+}
+
+.reviews .update-time {
+    clear: both;
+    margin: 5px 0;
+    font-size: 26rpx;
+    color: #808695;
+}
+
+.reviews .item-title {
+    font-size: 32rpx;
+    margin-bottom: 5px;
+    color: #2b85e4;
+}
+
+.reviews .item-content {
+    font-size: 26rpx;
+}
+
+.reviews .item-content .more {
+    color: #2d8cf0;
+}
+
+.reviews .show-review {
+    /* fixed 才能让弹框固定在当前想要显示的位置 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .6);
+    z-index: 100;
+}
+
+.reviews .review-content {
+    position: relative;
+    width: 75%;
+    height: 75%;
+    overflow-y: scroll;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 10px;
+    padding: 15px;
+    font-size: 26rpx;
+}
+
+/* footer */
+.footer {
+    width: 100%;
+    margin: 10px 0;
+    text-align: center;
+    color: #808695;
+    font-size: 36rpx;
+}

@@ -1,21 +1,98 @@
 
-<view class="detail">
+<scroll-view class="detail {{pageLoading ? 'hide' : ''}}" scroll-y="allowScroll">
+    <!-- 头部电影信息 -->
     <view class="info-box">
-        <view class="back-image" style="{{backImage}}"></view>
+        <view class="back back-image" style="{{backImage}}"></view>
+        <view class="back back-mask"></view>
         <view class="bill-image" style="{{backImage}}"></view>
         <view class="info">
-            <view class="title">
-                <view class="main"></view>
-                <view class="sub"></view>
+            <view class="item title">
+                <view class="main">{{movieInfo.title}}</view>
+                <view class="sub">{{movieInfo.title == movieInfo.original_title ? (movieInfo.aka[0] || movieInfo.title) : movieInfo.original_title}}</view>
             </view>
-            <view class="director"></view>
-            <view class="casts"></view>
-            <view class="rating"></view>
-            <view class="year"></view>
-            <view class="tags"></view>
+            <view class="item rating">评分：<text class="rate">{{movieInfo.rating.average || '暂无评分'}}</text></view>
+            <view class="item director">导演：{{directors || '(未公开)'}}</view>
+            <view class="item casts">主演：{{casts || '(未公开)'}}</view>
+            <view class="item year">年份：{{movieInfo.year || '(未公开)'}}</view>
+            <view class="item tags">类型：{{tags || '(未公开)'}}</view>
         </view>
     </view>
-    <view class="summary"></view>
-    <view class="director-casts"></view>
-    <view class="reviews"></view>
-</view>
+    <view class="divider"></view>
+    <!-- 导演 / 主演 -->
+    <view class="section director-casts">
+        <view class="title">导演 / 主演</view>
+        <view class="content">
+            <view class="inline-item" wx:for="{{movieInfo.directors}}" wx:key="item.id" data-url="{{item.avatars.large}}" bindtap="previewDirectorCasts">
+                <view class="item">
+                    <image class="logo" src="{{item.avatars.medium}}"></image>
+                    <text class="name">{{item.name}}</text>
+                </view>
+            </view>
+            <view class="inline-item" wx:for="{{movieInfo.casts}}" wx:key="item.id" data-url="{{item.avatars.large}}" bindtap="previewDirectorCasts">
+                <view class="item">
+                    <image class="logo" src="{{item.avatars.medium}}"></image>
+                    <view class="name">{{item.name}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!-- 简介 -->
+    <view class="section summary">
+        <view class="title">简介</view>
+        <view class="content"><text>{{movieInfo.summary}}</text></view>
+    </view>
+    <!-- 剧照 -->
+    <view class="section photos {{movieInfo.photos.length ? '' : 'hide'}}">
+        <view class="title">剧照</view>
+        <view class="content">
+            <image class="photo" wx:for="{{movieInfo.photos}}" wx:key="{{item.id}}" data-url="{{item.image}}" src="{{item.cover}}" bindtap="previewPhoto"></image>
+        </view>
+    </view>
+    <!-- 编剧 -->
+    <view class="section writers {{movieInfo.writers.length ? '' : 'hide'}}">
+        <view class="title">编剧</view>
+        <view class="content">
+            <view class="inline-item" wx:for="{{movieInfo.writers}}" wx:key="item.id" data-url="{{item.avatars.large}}" bindtap="previewWriter">
+                <view class="item">
+                    <image class="logo" src="{{item.avatars.medium}}"></image>
+                    <view class="name">{{item.name}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <!-- 评论 -->
+    <view class="section reviews {{reviews.length ? '' : 'hide'}}">
+        <view class="title">评论</view>
+        <view class="content">
+            <view class="item" wx:for="{{reviews}}" wx:key="item.id" data-index="{{index}}" bindtap="showReviewContent">
+                <view class="user-info">
+                    <image class="logo" src="{{item.author.avatar}}"></image>
+                    <text class="name">{{item.author.name}}</text>
+                    <text class="rating">
+                        <text class="value" wx:for="{{item.rating.value}}" wx:for-item="rate" wx:key="rate">★</text>
+                        <text class="default" wx:for="{{5 - item.rating.value}}" wx:for-item="rate" wx:key="rate">★</text>
+                    </text>
+                    <text class="review-rate">
+                        <text class="up">▲ {{item.useful_count}}</text>
+                        <text class="down">▼ {{item.useless_count}}</text>
+                    </text>
+                </view>
+                <view class="update-time">更新于：{{item.updated_at}}</view>
+                <view class="item-title">{{item.title}}</view>
+                <view class="item-content">
+                    {{item.summary}}
+                    <text class="more">更多</text>
+                </view>
+                <!-- 展示评论的内容 -->
+                <view class="show-review {{showReview[index] ? '' : 'hide'}}" style="{{windowSize}}" catchtap="closeShowReview">
+                    <view class="review-content">
+                        <text>{{item.content}}</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="footer">
+        {{footerDesc}}
+    </view>
+</scroll-view>
