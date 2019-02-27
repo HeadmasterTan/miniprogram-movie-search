@@ -6,12 +6,11 @@ Page({
      */
     data: {
         movieId: '',
-        // backImage: 'background-image: url(/assets/imgs/backimage.webp)', // 模糊背景
-        backImage: '',
         searchUrl: 'https://douban.uieee.com/v2/movie/subject/',
         movieInfo: {},
         reviews: [], // 长评论
 
+        backImage: '', // 背景
         directors: '', // 导演列表
         casts: '', // 主演列表
         tags: '', // 类型列表
@@ -81,9 +80,9 @@ Page({
                 this.setData({
                     movieInfo: res.data,
                     directors: res.data.directors.map(item => item.name).join(' / '),
+                    backImage: `background-image: url('${res.data.images.medium}')`,
                     casts: res.data.casts.map(item => item.name).join(' / '),
                     tags: res.data.genres.join(' / '),
-                    backImage: `background-image: url('${res.data.images.medium}')`
                 });
 
                 wx.hideLoading();

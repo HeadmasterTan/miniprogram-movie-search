@@ -32,7 +32,6 @@ Page({
         windowSize: '', // 设备窗口大小
 
         movies: [], // 电影列表，每一个菜单对应一个列表
-        cityList: [], // 城市列表
         menuList: ['正在热映', '豆瓣排行'], // 菜单
     },
     /**
@@ -45,7 +44,6 @@ Page({
             movies
         })
         this.getSystemInfo();
-        this.getCityList();
         this.getNowCity();
     },
     /**
@@ -55,7 +53,7 @@ Page({
         console.log(res);
     },
     /**
-     * 获取设备信息
+     * 获取设备信息，构建可视宽高
      */
     getSystemInfo() {
         wx.getSystemInfo({
@@ -65,18 +63,6 @@ Page({
                     windowSize: `width:${res.windowWidth}px;height:${res.windowHeight}px`
                 });
                 app.globalData.windowSize = this.data.windowSize;
-            }
-        });
-    },
-    /**
-     * 获取全国全部城市列表
-     */
-    getCityList() {
-        qqmapsdk.getCityList({
-            success: res => {
-                this.setData({
-                    cityList: res.result[1]
-                });
             }
         });
     },
@@ -144,7 +130,7 @@ Page({
                     });
                     res.data.subjects.forEach(item => {
                         item.castsStr = item.casts.length > 0 ? item.casts.map(cast => cast.name).join(' / ') : '(未公开)';
-                        item.genresStr = item.genres.length > 0 ? item.genres.join(' / ') : '(未知)';
+                        item.genresStr = item.genres.length > 0 ? item.genres.join(' / ') : '(未公开)';
                     });
 
                     // 将返回的电影列表重新排序，新获取到的排到最后面
@@ -266,7 +252,7 @@ Page({
         });
     },
     /**
-     * 监听触摸结束
+     * 监听触摸结束，当移动距离超过50个单位才滑动页面。虽然没有滑动动画。。。
      */
     watchTouchEnd() {
         if (this.data.isMove) {

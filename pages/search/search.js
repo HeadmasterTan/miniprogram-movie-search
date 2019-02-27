@@ -8,12 +8,12 @@ Page({
         windowSize: '', // 设备窗口大小
 
         // 查询参数
-        searchKey: '', // 查询关键字
         start: 0, // 开始下标
         count: 20, // 查询条数
-        searchUrl: 'https://douban.uieee.com/v2/movie/search', // 电影查询URL
+        searchKey: '', // 查询关键字
         delaySearch: null, // 延迟搜索
         noMoreDesc: '随便搜点啥呗~', // 没有更多电影的底部描述
+        searchUrl: 'https://douban.uieee.com/v2/movie/search', // 电影查询URL
         
         movies: [], // 电影列表
     },
@@ -60,7 +60,7 @@ Page({
                 }
                 res.data.subjects.forEach(item => {
                     item.castsStr = item.casts.length > 0 ? item.casts.map(cast => cast.name).join(' / ') : '(未公开)';
-                    item.genresStr = item.genres.length > 0 ? item.genres.join(' / ') : '(未知)';
+                    item.genresStr = item.genres.length > 0 ? item.genres.join(' / ') : '(未公开)';
                 });
 
                 // 将返回的电影列表重新排序，新获取到的排到最后面

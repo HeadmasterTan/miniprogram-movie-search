@@ -12,7 +12,7 @@ page {
     display: none;
 }
 
-/* 信息 */
+/* 电影信息 */
 .info-box {
     position: relative;
     display: flex;
@@ -99,7 +99,7 @@ page {
     z-index: 10;
 }
 
-/* Common */
+/* 下方信息Common */
 .section {
     width: 100%;
     padding: 0 10px;
@@ -245,6 +245,7 @@ page {
     color: #2d8cf0;
 }
 
+/* 弹框评论 */
 .reviews .show-review {
     /* fixed 才能让弹框固定在当前想要显示的位置 */
     position: fixed;
