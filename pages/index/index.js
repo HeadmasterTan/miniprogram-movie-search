@@ -9,6 +9,10 @@ const qqmapsdk = new QQMapWX({
 
 Page({
     data: {
+        pageX: 0, // 左右滑动参照参数
+        isMove: false, // 是否移动了
+        endPageX: 0, // 结束时X轴位置
+
         // 查询参数
         city: '', // 查询城市
         start: 0, // 开始下标
@@ -30,48 +34,6 @@ Page({
         movies: [], // 电影列表，每一个菜单对应一个列表
         cityList: [], // 城市列表
         menuList: ['正在热映', '豆瓣排行'], // 菜单
-        // api返回的单个数据展示，这个东西是拿来看的，不是拿来用的
-        // movie: {
-        //     alt: '', // 地址
-        //     casts: [{ // 演员列表
-        //         alt: '', // 地址
-        //         avatars: [{ // 头像
-        //             large: '', // 大头像
-        //             medium: '', // 中等头像
-        //             small: '' // 小头像
-        //         }],
-        //         id: '',
-        //         name: '' // 名字
-        //     }],
-        //     collect_count: 0, // unknown
-        //     directors: [{ // 导演列表
-        //         alt: '', // 地址
-        //         avatars: [{ // 头像列表
-        //             large: '', // 大头像
-        //             medium: '', // 中等头像
-        //             small: '' // 小头像
-        //         }],
-        //         id: '',
-        //         name: '' // 名字
-        //     }],
-        //     genres: [], // 类型 String
-        //     id: '',
-        //     images: [{ // 海报列表
-        //         large: '', // 大头像
-        //         medium: '', // 中等头像
-        //         small: '' // 小头像
-        //     }],
-        //     original_title: '', // 原名
-        //     rating: { // 评分
-        //         average: 0, // 得分
-        //         max: 10, // 最高
-        //         min: 0, // 最低
-        //         stars: 0
-        //     },
-        //     subtype: '', // 类型
-        //     title: '', // 标题
-        //     year: 2018
-        // }
     },
     /**
      * 页面数据初始化
@@ -85,6 +47,12 @@ Page({
         this.getSystemInfo();
         this.getCityList();
         this.getNowCity();
+    },
+    /**
+     * 监听分享
+     */
+    onShareAppMessage(res) {
+        console.log(res);
     },
     /**
      * 获取设备信息
@@ -160,6 +128,10 @@ Page({
                 dataType: 'json',
                 responseType: 'text',
                 success: res => {
+                    if (res.statusCode != 200) {
+                        this.requestFail();
+                        return;
+                    }
                     if (res.data.subjects.length === this.data.movies[curList].length) { // 再也请求不到数据了就显示没有了
                         this.setData({
                             noMoreMovie: true,
@@ -204,11 +176,29 @@ Page({
         }
     },
     /**
+     * 请求失败
+     */
+    requestFail() {
+        let minute = 60 - (new Date()).getMinutes();
+        wx.showModal({
+            title: '非常抱歉',
+            content: `渣渣程序本小时的查询次数已经用完了，请${minute}分钟后再来吧o(╥﹏╥)o`,
+            showCancel: false,
+            confirmText: '好的吧'
+        });
+    },
+    /**
      * 切换列表类型
      */
     changeList(e) {
+        this.changeMovieList(e.target.dataset.item);
+    },
+    /**
+     * 切换列表，查询电影
+     */
+    changeMovieList(list) {
         this.setData({
-            curList: e.target.dataset.item,
+            curList: list,
             noMoreMovie: false,
             noMoreDesc: '别急，让我找找...'
         });
@@ -250,17 +240,6 @@ Page({
         })
     },
     /**
-     * 选择城市
-     */
-    chooseCity() {
-        wx.showModal({
-            title: '温馨提示',
-            content: '功能施工中...',
-            showCancel: false,
-            confirmText: '我知道了'
-        });
-    },
-    /**
      * 展示电影信息
      */
     showMovieInfo(e) {
@@ -268,5 +247,41 @@ Page({
         wx.navigateTo({
             url: '../detail/detail'
         });
+    },
+    /**
+     * 监听触摸
+     */
+    watchTouchStart(e) {
+        this.setData({
+            pageX: e.touches[0].pageX
+        });
+    },
+    /**
+     * 监听触摸移动
+     */
+    watchTouchMove(e) {
+        this.setData({
+            endPageX: e.touches[0].pageX,
+            isMove: true
+        });
+    },
+    /**
+     * 监听触摸结束
+     */
+    watchTouchEnd() {
+        if (this.data.isMove) {
+            let moveToRight = (this.data.pageX - this.data.endPageX) > 50;
+            let moveToLeft = (this.data.endPageX - this.data.pageX) > 50;
+            this.setData({
+                isMove: false
+            });
+
+            if (moveToRight && this.data.curList === 0) {
+                this.changeMovieList(1);
+            }
+            if (moveToLeft && this.data.curList === 1) {
+                this.changeMovieList(0);
+            }
+        }
     }
 })

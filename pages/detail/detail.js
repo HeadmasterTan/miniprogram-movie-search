@@ -54,6 +54,14 @@ Page({
         }
     },
     /**
+     * 监听分享
+     */
+    onShareAppMessage(res) {
+        return {
+            title: this.data.movieInfo.title
+        };
+    },
+    /**
      * 获取电影信息
      */
     getMovieInfo() {
@@ -66,6 +74,10 @@ Page({
             dataType: 'json',
             responseType: 'text',
             success: res => {
+                if (res.statusCode != 200) {
+                    this.requestFail();
+                    return;
+                }
                 this.setData({
                     movieInfo: res.data,
                     directors: res.data.directors.map(item => item.name).join(' / '),
@@ -73,7 +85,6 @@ Page({
                     tags: res.data.genres.join(' / '),
                     backImage: `background-image: url('${res.data.images.medium}')`
                 });
-                console.log(res.data);
 
                 wx.hideLoading();
                 this.setData({
@@ -102,8 +113,19 @@ Page({
                     reviews: res.data.reviews,
                     footerDesc: '没了哟 (～￣▽￣)～ '
                 });
-                console.log(res.data);
             }
+        });
+    },
+    /**
+     * 请求失败
+     */
+    requestFail() {
+        let minute = 60 - (new Date()).getMinutes();
+        wx.showModal({
+            title: '非常抱歉',
+            content: `渣渣程序本小时的查询次数已经用完了，请${minute}分钟后再来吧o(╥﹏╥)o`,
+            showCancel: false,
+            confirmText: '好的吧'
         });
     },
     /**
@@ -164,7 +186,6 @@ Page({
             showReview: temp,
             allowScroll: false,
         });
-        console.log(ref, this.data.showReview);
     },
     /**
      * 关闭评论浏览

@@ -179,8 +179,10 @@ page {
 /* 评论 */
 .reviews .item {
     margin: 10px 0;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #e8eaec;
+    border: 1px solid #e8eaec;
+    padding: 10px;
+    border-radius: 2px;
+    box-shadow: 0px 3px 1px -2px rgba(0,0,0,0.2), 0px 2px 2px 0px rgba(0,0,0,0.14), 0px 1px 5px 0px rgba(0,0,0,0.12);
 }
 
 .reviews .user-info {
@@ -224,15 +226,15 @@ page {
 
 .reviews .update-time {
     clear: both;
-    margin: 5px 0;
+    margin: 5px 0 10px 0;
     font-size: 26rpx;
     color: #808695;
 }
 
 .reviews .item-title {
     font-size: 32rpx;
-    margin-bottom: 5px;
-    color: #2b85e4;
+    margin-bottom: 10px;
+    color: #17233d;
 }
 
 .reviews .item-content {
@@ -266,6 +268,67 @@ page {
     border-radius: 10px;
     padding: 15px;
     font-size: 26rpx;
+}
+
+.review-content .modal-title {
+    font-size: 38rpx;
+    color: #17233d;
+}
+
+.review-content .modal-user {
+    display: flex;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.review-content .modal-user .logo {
+    width: 50rpx;
+    height: 50rpx;
+}
+
+.review-content .modal-user .name {
+    margin: 0 10px;
+    font-size: 28rpx;
+}
+
+.review-content .modal-user .rating .value {
+    color: #ff9900;
+}
+
+.review-content .modal-user .rating .default {
+    color: #c5c8ce;
+}
+
+.review-content .create-time {
+    color: #808695;
+    margin-top: 10px;
+}
+
+.review-content .modal-content {
+    margin-top: 10px;
+}
+
+.review-content .modal-rate {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.review-content .modal-rate .rate {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 80rpx;
+    height: 30rpx;
+    padding: 5px;
+    background-color: #19be6b;
+    color: white;
+}
+
+.review-content .modal-rate .down-rate {
+    background-color: #ed4014;
+    margin-left: 15px;
 }
 
 /* footer */

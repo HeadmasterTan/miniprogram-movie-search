@@ -2,15 +2,15 @@
 <view class="container" style="{{windowSize}}">
     <!-- 导航 -->
     <view class="navigator">
-        <view class="position" bindtap="chooseCity">{{city}}</view>
-        <view class="rectangle" bindtap="chooseCity"></view>
+        <view class="position">{{city}}</view>
+        <view class="rectangle"></view>
         <view class="menu">
             <view class="{{ curList === index ? 'item active' : 'item' }}" wx:for="{{menuList}}" wx:key="{{item}}" data-item="{{index}}" bindtap="changeList">{{item}}</view>
         </view>
         <view class="search" bindtap="toggleSearch">搜索</view>
     </view>
     <!-- 内容 -->
-    <view class="content">
+    <view class="content" bindtouchstart="watchTouchStart" bindtouchmove="watchTouchMove" bindtouchend="watchTouchEnd">
         <!-- 列表 -->
         <scroll-view class="list" scroll-y bindscrolltolower="loadMoreMovie">
             <!-- 单个电影信息 -->

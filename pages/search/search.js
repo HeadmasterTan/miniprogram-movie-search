@@ -54,6 +54,10 @@ Page({
             dataType: 'json',
             responseType: 'text',
             success: res => {
+                if (res.statusCode != 200) {
+                    this.requestFail();
+                    return;
+                }
                 res.data.subjects.forEach(item => {
                     item.castsStr = item.casts.length > 0 ? item.casts.map(cast => cast.name).join(' / ') : '(未公开)';
                     item.genresStr = item.genres.length > 0 ? item.genres.join(' / ') : '(未知)';
@@ -94,6 +98,18 @@ Page({
         });
     },
     /**
+     * 请求失败
+     */
+    requestFail() {
+        let minute = 60 - (new Date()).getMinutes();
+        wx.showModal({
+            title: '非常抱歉',
+            content: `渣渣程序本小时的查询次数已经用完了，请${minute}分钟后再来吧o(╥﹏╥)o`,
+            showCancel: false,
+            confirmText: '好的吧'
+        });
+    },
+    /**
      * 查询电影
      */
     searchMovie(e) {
@@ -113,7 +129,7 @@ Page({
             this.setData({
                 delaySearch: setTimeout(() => {
                     this.getMovies();
-                }, 200)
+                }, 300)
             });
         } else {
             this.setData({
