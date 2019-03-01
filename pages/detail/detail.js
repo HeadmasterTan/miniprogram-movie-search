@@ -22,6 +22,14 @@ Page({
         footerDesc: '没了哟 (～￣▽￣)～ ', // 页脚描述
     },
     /**
+     * 监听接收分享传参
+     */
+    onLoad(options) {
+        if (options.movieId) {
+            app.globalData.movieId = options.movieId;
+        }
+    },
+    /**
      * 生命周期函数--监听页面加载
      */
     onReady(options) {
@@ -57,7 +65,8 @@ Page({
      */
     onShareAppMessage(res) {
         return {
-            title: this.data.movieInfo.title
+            title: this.data.movieInfo.title,
+            path: `/pages/detail/detail?movieId=${this.data.movieInfo.id}`
         };
     },
     /**
